@@ -1,0 +1,3 @@
+.venv
+vocab/__pycache__
+db.sqlite3
