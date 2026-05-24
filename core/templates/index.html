@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocab - Build Your Personal Vocabulary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <!-- Navbar -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <h1 class="text-2xl font-bold text-gray-900">Vocab</h1>
+            </div>
+            <!-- <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-gray-600 hover:text-gray-900">Features</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900">How it Works</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900">Pricing</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900">Blog</a>
+            </div> -->
+            <div class="flex items-center space-x-4">
+                <a href="/login" class="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-blue-700 transition">
+                    Log in
+                </a>
+                <!-- <a href="/register" 
+                   class="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-blue-700 transition">
+                    Get Started Free
+                </a> -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-white py-20">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-5xl font-bold text-gray-900 leading-tight">
+                    Build your own visual vocabulary
+                </h2>
+                <p class="mt-6 text-xl text-gray-600">
+                    Create custom domains, add images, translations in multiple languages, 
+                    and master new words at your own pace.
+                </p>
+                <div class="mt-10 flex items-center gap-4">
+                    <a href="/domains/" 
+                       class="bg-blue-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-blue-700 transition">
+                        Start Building
+                    </a>
+                    <a href="#" 
+                       class="border border-gray-300 px-8 py-4 rounded-xl text-lg font-medium hover:bg-gray-50 transition">
+                        Watch Demo
+                    </a>
+                </div>
+                <!-- <p class="mt-6 text-sm text-gray-500">No credit card required • Free forever plan available</p> -->
+            </div>
+            
+            <div class="relative">
+                <!-- <img src="https://picsum.photos/800/600" 
+                     alt="Vocabulary Builder App Interface"
+                     class="rounded-2xl shadow-2xl"> -->
+                {% load static %}
+                <img src="{% static 'core\images\vocab.jpg' %}" 
+                alt="Vocabulary Builder App Interface"
+                class="rounded-2xl shadow-2xl"
+                width="800" height="600">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-semibold text-gray-900">Powerful Features</h3>
+                <p class="mt-4 text-lg text-gray-600">Everything you need to build and retain vocabulary effectively</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-folder-tree text-2xl text-blue-600"></i>
+                    </div>
+                    <h4 class="text-2xl font-semibold">Custom Domains</h4>
+                    <p class="mt-3 text-gray-600">
+                        Create unlimited domains like Kitchen, Medical, Business, Travel and more.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-image text-2xl text-blue-600"></i>
+                    </div>
+                    <h4 class="text-2xl font-semibold">Visual Learning</h4>
+                    <p class="mt-3 text-gray-600">
+                        Add high-quality photos for every word to improve memory and recall.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-globe text-2xl text-blue-600"></i>
+                    </div>
+                    <h4 class="text-2xl font-semibold">Multilingual</h4>
+                    <p class="mt-3 text-gray-600">
+                        Add translations in as many languages as you want with descriptions and examples.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <h3 class="text-4xl font-semibold text-center mb-16">How It Works</h3>
+            
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="mx-auto w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">1</div>
+                    <h5 class="font-semibold text-xl">Create Domains</h5>
+                    <p class="mt-3 text-gray-600">Organize your vocabulary into meaningful categories.</p>
+                </div>
+                <div class="text-center">
+                    <div class="mx-auto w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">2</div>
+                    <h5 class="font-semibold text-xl">Add Words</h5>
+                    <p class="mt-3 text-gray-600">Upload images, write words, translations, and notes.</p>
+                </div>
+                <div class="text-center">
+                    <div class="mx-auto w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">3</div>
+                    <h5 class="font-semibold text-xl">Practice</h5>
+                    <p class="mt-3 text-gray-600">Use flashcards, quizzes, and spaced repetition.</p>
+                </div>
+                <div class="text-center">
+                    <div class="mx-auto w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">4</div>
+                    <h5 class="font-semibold text-xl">Master</h5>
+                    <p class="mt-3 text-gray-600">Track progress and retain words for life.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-gray-900 text-white py-20">
+        <div class="max-w-4xl mx-auto text-center px-6">
+            <h3 class="text-4xl font-semibold">Ready to build your vocabulary?</h3>
+            <p class="mt-6 text-xl text-gray-400">
+                Join thousands of learners who are mastering new words every day.
+            </p>
+            <a href="/register" 
+               class="inline-block mt-10 bg-white text-gray-900 px-10 py-4 rounded-2xl text-lg font-semibold hover:bg-gray-100 transition">
+                Get Started
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold">Vocab</h2>
+                    <p class="text-gray-500 mt-2">© 2026 All rights reserved.</p>
+                </div>
+                <!-- <div class="flex gap-8 mt-6 md:mt-0">
+                    <a href="#" class="text-gray-600 hover:text-gray-900">Privacy</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900">Terms</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900">Contact</a>
+                </div> -->
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

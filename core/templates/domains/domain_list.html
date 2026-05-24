@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}My Domains - Vocab{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-8">My Domains</h1>
+
+<div class="grid md:grid-cols-3 gap-6">
+    {% for domain in domains %}
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition">
+        <h3 class="text-xl font-semibold">{{ domain.name }}</h3>
+        {% if domain.description %}
+            <p class="text-gray-600 mt-2 line-clamp-2">{{ domain.description }}</p>
+        {% endif %}
+        
+        <div class="mt-6 flex justify-between items-center">
+            <span class="text-sm text-gray-500">
+                {{ domain.items.count }} words
+            </span>
+            <a href="{% url 'domain_detail' domain.id %}" 
+               class="text-blue-600 hover:text-blue-700 font-medium">
+                Open →
+            </a>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-gray-500">No domains yet. Create your first domain!</p>
+    {% endfor %}
+</div>
+
+<a href="{% url 'domain_create' %}" 
+   class="mt-10 inline-block bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">
+    + Create New Domain
+</a>
+{% endblock %}

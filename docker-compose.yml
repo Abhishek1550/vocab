@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    image: vocab-web
+    container_name: vocab-web
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app

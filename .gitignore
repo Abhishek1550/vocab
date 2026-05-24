@@ -1,3 +1,4 @@
 .venv
-vocab/__pycache__
 db.sqlite3
+__pycache__
+.env

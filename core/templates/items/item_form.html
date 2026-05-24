@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Word{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">Add New Word to <span class="text-blue-600">{{ domain.name }}</span></h1>
+
+    <form method="post" enctype="multipart/form-data" class="bg-white p-8 rounded-2xl">
+        {% csrf_token %}
+        
+        <div class="grid grid-cols-1 gap-8">
+            <!-- Image -->
+            <div>
+                <label class="block text-sm font-medium mb-2">Image (Optional)</label>
+                {{ form.image|add_class:"block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" }}
+            </div>
+
+            <!-- Translations will be added dynamically later -->
+            {{ form.as_p }}
+        </div>
+
+        <button type="submit" class="mt-10 w-full bg-blue-600 text-white py-4 rounded-xl font-semibold hover:bg-blue-700">
+            Save Word
+        </button>
+    </form>
+</div>
+{% endblock %}
