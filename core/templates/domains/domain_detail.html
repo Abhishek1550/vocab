@@ -11,7 +11,7 @@
         {% endif %}
     </div>
     <div class="flex gap-4">
-        <a href="{% url 'domain_update' domain.id %}" class="text-blue-600 hover:underline">Edit</a>
+        <a href="{% url 'domain_update' domain.id %}" class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">Edit</a>
         <a href="{% url 'item_create' domain.id %}" 
            class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">
             + Add New Word

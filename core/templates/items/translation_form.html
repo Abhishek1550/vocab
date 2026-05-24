@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Translation{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="mb-8">
+        <a href="{% url 'item_detail' item.id %}" class="text-blue-600 hover:underline">
+            ← Back to Item
+        </a>
+        <h1 class="text-3xl font-bold mt-3">Add New Translation</h1>
+        <p class="text-gray-600">for <strong>{{ item }}</strong></p>
+    </div>
+
+    <form method="post" class="bg-white p-8 rounded-2xl shadow-sm">
+        {% csrf_token %}
+        
+        <div class="space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Language Code</label>
+                {{ form.language_code }}
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Word</label>
+                {{ form.word }}
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                {{ form.description }}
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Example Sentence (Optional)</label>
+                {{ form.example_sentence }}
+            </div>
+            
+            <div class="flex items-center gap-2">
+                {{ form.is_primary }}
+                <label class="text-sm font-medium text-gray-700">Mark as Primary Translation</label>
+            </div>
+        </div>
+
+        <button type="submit" 
+                class="mt-10 w-full bg-blue-600 text-white py-4 rounded-xl font-semibold hover:bg-blue-700">
+            Add Translation
+        </button>
+    </form>
+</div>
+{% endblock %}

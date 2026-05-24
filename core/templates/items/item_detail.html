@@ -5,70 +5,94 @@
 {% block content %}
 <div class="max-w-4xl mx-auto">
 
+    <!-- Header -->
     <div class="flex justify-between items-start mb-8">
         <div>
             <a href="{% url 'domain_detail' item.domain.id %}" 
-               class="text-blue-600 hover:underline text-sm">
+               class="text-blue-600 hover:underline text-sm flex items-center gap-1">
                 ← Back to {{ item.domain.name }}
             </a>
             <h1 class="text-3xl font-bold mt-2">{{ item }}</h1>
         </div>
+        
         <div class="flex gap-3">
-            <a href="{% url 'item_update' item.id %}" 
-               class="px-5 py-2 border border-gray-300 rounded-xl hover:bg-gray-50">
-                Edit
+            <a href="{% url 'translation_create' item.id %}" 
+                class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
+                <i class="fas fa-plus"></i> Add Another Translation
             </a>
             <a href="{% url 'item_delete' item.id %}" 
-               class="px-5 py-2 text-red-600 hover:bg-red-50 rounded-xl">
+               class="px-6 py-3 text-red-600 hover:bg-red-50 rounded-xl font-medium">
                 Delete
             </a>
         </div>
     </div>
 
     <div class="grid md:grid-cols-2 gap-10">
-        
-        <!-- Image Section -->
+
+        <!-- Left Side: Image -->
         <div>
             {% if item.image %}
                 <img src="{{ item.image.url }}" 
                      alt="{{ item }}"
-                     class="w-full rounded-2xl shadow-lg">
+                     class="w-full rounded-2xl shadow-lg object-cover">
             {% else %}
-                <div class="w-full h-96 bg-gray-200 rounded-2xl flex items-center justify-center">
-                    <i class="fas fa-image text-6xl text-gray-400"></i>
+                <div class="w-full h-96 bg-gray-200 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-300">
+                    <div class="text-center">
+                        <i class="fas fa-image text-6xl text-gray-400"></i>
+                        <p class="text-gray-500 mt-4">No image available</p>
+                    </div>
                 </div>
             {% endif %}
         </div>
 
-        <!-- Translations Section -->
-        <div class="space-y-8">
-            <h2 class="text-2xl font-semibold">Translations</h2>
+        <!-- Right Side: Translations -->
+        <div>
+            <h2 class="text-2xl font-semibold mb-6">All Translations</h2>
             
             {% for translation in translations %}
-            <div class="bg-white p-6 rounded-2xl shadow-sm">
-                <div class="flex justify-between items-center">
-                    <span class="text-3xl font-semibold">{{ translation.word }}</span>
-                    <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm font-medium">
-                        {{ translation.language_code|upper }}
-                    </span>
+            <div class="bg-white p-6 rounded-2xl shadow-sm mb-6 border border-gray-100">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-3xl font-bold">{{ translation.word }}</span>
+                        <span class="ml-3 bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm font-medium">
+                            {{ translation.language_code|upper }}
+                        </span>
+                    </div>
+                    
                     {% if translation.is_primary %}
-                        <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full">Primary</span>
+                        <span class="bg-green-100 text-green-700 text-xs px-4 py-2 rounded-full font-medium">
+                            Primary
+                        </span>
                     {% endif %}
                 </div>
-                
+
                 {% if translation.description %}
-                    <p class="mt-4 text-gray-700">{{ translation.description }}</p>
+                    <div class="mt-5">
+                        <p class="text-sm text-gray-500 font-medium">Description</p>
+                        <p class="text-gray-700 leading-relaxed">{{ translation.description }}</p>
+                    </div>
                 {% endif %}
-                
+
                 {% if translation.example_sentence %}
                     <div class="mt-6">
-                        <p class="text-sm text-gray-500">Example:</p>
+                        <p class="text-sm text-gray-500 font-medium">Example Sentence</p>
                         <p class="italic text-gray-600">"{{ translation.example_sentence }}"</p>
                     </div>
                 {% endif %}
             </div>
+            {% empty %}
+            <p class="text-gray-500">No translations added yet.</p>
             {% endfor %}
+
+            <!-- Quick Action -->
+            <div class="mt-8">
+                <a href="{% url 'item_update' item.id %}" 
+                   class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
+                    <i class="fas fa-plus"></i> Add Another Translation
+                </a>
+            </div>
         </div>
+
     </div>
 
 </div>
