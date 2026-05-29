@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 class Domain(models.Model):
@@ -15,9 +16,15 @@ class Domain(models.Model):
         null=True,
         help_text="For hierarchical categorization (e.g., Kitchen > Appliances)"
     )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='domains'
+    )
 
     class Meta:
         ordering = ['name']
+        unique_together = ('user', 'name')
 
     def __str__(self):
         return self.name
@@ -39,6 +46,12 @@ class Item(models.Model):
         
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='items'
+    )
 
     class Meta:
         ordering = ['domain', 'created_at']
@@ -72,6 +85,11 @@ class Translation(models.Model):
     is_primary = models.BooleanField(
         default=False, 
         help_text="Marks the primary translation for display"
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='translations'
     )
 
     class Meta:
