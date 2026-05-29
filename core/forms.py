@@ -1,5 +1,6 @@
 from django import forms
 from .models import Domain, Item, Translation
+from allauth.account.forms import LoginForm, SignupForm
 
 class DomainForm(forms.ModelForm):
     class Meta:
@@ -49,3 +50,40 @@ class TranslationForm(forms.ModelForm):
             }),
             'is_primary': forms.CheckboxInput(attrs={'class': 'w-5 h-5'})
         }
+class CustomLoginForm(LoginForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.fields['login'].widget.attrs.update({
+            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1',
+            'placeholder': 'Enter your username or email'
+        })
+        self.fields['password'].widget.attrs.update({
+            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1',
+            'placeholder': 'Enter your password'
+        })
+
+
+class CustomSignupForm(SignupForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.fields['email'].widget.attrs.update({
+            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1',
+            'placeholder': 'Enter your email'
+        })
+        
+        if 'username' in self.fields:
+            self.fields['username'].widget.attrs.update({
+                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1',
+                'placeholder': 'Choose a username'
+            })
+        
+        self.fields['password1'].widget.attrs.update({
+            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1',
+            'placeholder': 'Create a password'
+        })
+        self.fields['password2'].widget.attrs.update({
+            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1',
+            'placeholder': 'Confirm password'
+        })

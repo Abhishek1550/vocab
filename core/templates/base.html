@@ -16,12 +16,29 @@
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-8">
                 <a href="/" class="text-2xl font-bold text-gray-900">Vocab</a>
-                <a href="{% url 'domain_list' %}" class="text-gray-600 hover:text-gray-900 font-medium">Domains</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'domain_list' %}" class="text-gray-600 hover:text-gray-900 font-medium">My Domains</a>
+                {% endif %}
             </div>
-            <a href="{% url 'domain_create' %}" 
-               class="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-blue-700 transition">
-                + New Domain
-            </a>
+            
+            <div class="flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                    <span class="text-gray-700">Hi, {{ user.email|truncatechars:25 }}</span>
+                    <a href="{% url 'account_logout' %}" 
+                    class="text-gray-600 hover:text-red-600 font-medium">
+                        Logout
+                    </a>
+                {% else %}
+                    <a href="{% url 'account_login' %}" 
+                    class="text-gray-700 hover:text-gray-900 font-medium px-5 py-2.5">
+                        Log in
+                    </a>
+                    <a href="{% url 'account_signup' %}" 
+                    class="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-blue-700 transition">
+                        Sign Up Free
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </nav>
 

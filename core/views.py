@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Domain, Item
 from .forms import DomainForm, ItemForm, TranslationForm
+from django.contrib.auth.decorators import login_required
 
 # ==================== Landing Page ====================
 
@@ -9,18 +10,18 @@ def vocab(request):
     return render(request, "index.html")
 
 # ==================== DOMAIN VIEWS ====================
-
+@login_required
 def domain_list(request):
     """List all domains"""
-    domains = Domain.objects.all().order_by('name')
+    domains = Domain.objects.filter(user=request.user).order_by('name')
     return render(request, "domains/domain_list.html", {
         'domains': domains
     })
 
-
+@login_required
 def domain_detail(request, domain_id):
     """Show one domain and its items"""
-    domain = get_object_or_404(Domain, id=domain_id)
+    domain = get_object_or_404(Domain, id=domain_id, user=request.user)
     items = domain.items.prefetch_related('translations').all()
     subdomains = domain.subdomains.all()
     
@@ -30,13 +31,15 @@ def domain_detail(request, domain_id):
         'subdomains': subdomains
     })
 
-
+@login_required
 def domain_create(request):
     """Create new domain"""
     if request.method == 'POST':
         form = DomainForm(request.POST)
         if form.is_valid():
-            form.save()
+            domain = form.save(commit=False)
+            domain.user = request.user
+            domain.save()
             messages.success(request, "Domain created successfully!")
             return redirect('domain_list')
     else:
@@ -46,10 +49,10 @@ def domain_create(request):
         'form': form
     })
 
-
+@login_required
 def domain_update(request, domain_id):
     """Edit existing domain"""
-    domain = get_object_or_404(Domain, id=domain_id)
+    domain = get_object_or_404(Domain, id=domain_id, user=request.user)
     
     if request.method == 'POST':
         form = DomainForm(request.POST, instance=domain)
@@ -66,8 +69,9 @@ def domain_update(request, domain_id):
 
 # ==================== ITEM VIEWS ====================
 
+@login_required
 def item_create(request, domain_id):
-    domain = get_object_or_404(Domain, id=domain_id)
+    domain = get_object_or_404(Domain, id=domain_id, user=request.user)
     
     if request.method == 'POST':
         item_form = ItemForm(request.POST, request.FILES)
@@ -96,9 +100,9 @@ def item_create(request, domain_id):
         'domain': domain
     })
 
-
+@login_required
 def item_detail(request, item_id):
-    item = get_object_or_404(Item, id=item_id)
+    item = get_object_or_404(Item, id=item_id, domain__user=request.user)
     translations = item.translations.all()
     
     return render(request, "items/item_detail.html", {
@@ -106,9 +110,9 @@ def item_detail(request, item_id):
         'translations': translations
     })
 
-
+@login_required
 def item_update(request, item_id):
-    item = get_object_or_404(Item, id=item_id)
+    item = get_object_or_404(Item, id=item_id, domain__user=request.user)
     
     # Get the primary translation (or first one)
     primary_translation = item.translations.filter(is_primary=True).first()
@@ -136,8 +140,9 @@ def item_update(request, item_id):
         'is_edit': True         # To change title
     })
 
+@login_required
 def item_delete(request, item_id):
-    item = get_object_or_404(Item, id=item_id)
+    item = get_object_or_404(Item, id=item_id, domain__user=request.user)
     if request.method == 'POST':
         domain_id = item.domain.id
         item.delete()
@@ -148,8 +153,9 @@ def item_delete(request, item_id):
 
 # ==================== ITEM VIEWS ====================
 
+@login_required
 def translation_create(request, item_id):
-    item = get_object_or_404(Item, id=item_id)
+    item = get_object_or_404(Item, id=item_id, domain__user=request.user)
     
     if request.method == 'POST':
         form = TranslationForm(request.POST)

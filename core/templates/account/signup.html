@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - Vocab{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-20">
+    <div class="bg-white p-8 rounded-3xl shadow-sm">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-900">Join Vocab</h2>
+            <p class="text-gray-600 mt-2">Start building your personal vocabulary today</p>
+        </div>
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+                {{ form.errors }}
+            </div>
+            {% endif %}
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+            
+            {% if form.username %}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+            {% endif %}
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
+
+            <button type="submit" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-2xl transition">
+                Create Account
+            </button>
+        </form>
+
+        <div class="text-center mt-6">
+            <a href="{% url 'account_login' %}" class="text-blue-600 hover:underline">
+                Already have an account? Log in
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

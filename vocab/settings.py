@@ -37,6 +37,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
 
 APPS = [
@@ -46,6 +47,9 @@ APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework',
     'drf_spectacular',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + APPS + THIRD_PARTY_APPS
@@ -57,6 +61,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -94,6 +99,14 @@ DATABASES = {
         'CONN_MAX_AGE': 600,                       # Good practice
     }
 }
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]   
 
 
 # Password validation
@@ -145,3 +158,15 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
 }
 
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = 'domain_list'
+LOGOUT_REDIRECT_URL = 'vocab'
+
+ACCOUNT_FORMS = {
+    'login': 'core.forms.CustomLoginForm',
+    'signup': 'core.forms.CustomSignupForm',
+}
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
