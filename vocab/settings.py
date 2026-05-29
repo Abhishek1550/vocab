@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -84,8 +85,13 @@ WSGI_APPLICATION = 'vocab.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'vocab_db'),
+        'USER': os.getenv('POSTGRES_USER', 'abhishek'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'abhishek123'),
+        'HOST': os.getenv('DB_HOST', 'db'),        # 'db' in docker, 'localhost' locally
+        'PORT': os.getenv('DB_PORT', '5432'),
+        'CONN_MAX_AGE': 600,                       # Good practice
     }
 }
 
