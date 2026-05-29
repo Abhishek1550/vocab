@@ -20,6 +20,9 @@
             <span class="text-sm text-gray-500">
                 {{ domain.items.count }} words
             </span>
+            <span class="text-sm text-gray-500">
+                {{ domain.subdomains.count }} subdomains
+            </span>
             <a href="{% url 'domain_detail' domain.id %}" 
             class="text-blue-600 hover:text-blue-700 font-medium">
                 Open →

@@ -7,6 +7,14 @@ class Domain(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    parent = models.ForeignKey(
+        'self',
+        on_delete=models.SET_NULL,
+        related_name='subdomains',
+        blank=True,
+        null=True,
+        help_text="For hierarchical categorization (e.g., Kitchen > Appliances)"
+    )
 
     class Meta:
         ordering = ['name']

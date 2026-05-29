@@ -29,16 +29,25 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+APPS = [
     'core',
 ]
+
+THIRD_PARTY_APPS = [
+    'rest_framework',
+    'drf_spectacular',
+]
+
+INSTALLED_APPS = DJANGO_APPS + APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -120,4 +129,13 @@ STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Vocab API',
+    'DESCRIPTION': 'API for managing vocabulary words and their definitions.',
+    'VERSION': '1.0.0',
+}
 

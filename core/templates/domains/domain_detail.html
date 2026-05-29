@@ -19,7 +19,36 @@
     </div>
 </div>
 
+<!-- Subdomains Section -->
+<h2 class="text-2xl font-semibold mb-4">Subdomains</h2>
+<div class="grid md:grid-cols-3 gap-6">
+    {% for subdomain in subdomains %}
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition flex flex-col h-full">
+        <h3 class="text-xl font-semibold">{{ subdomain.name }}</h3>
+        
+        {% if subdomain.description %}
+            <p class="text-gray-600 mt-2 line-clamp-2 flex-grow">{{ subdomain.description }}</p>
+        {% else %}
+            <div class="flex-grow"></div>   <!-- This pushes the footer down -->
+        {% endif %}
+        
+        <div class="mt-6 flex justify-between items-center">
+            <span class="text-sm text-gray-500">
+                {{ subdomain.items.count }} words
+            </span>
+            <a href="{% url 'domain_detail' subdomain.id %}" 
+            class="text-blue-600 hover:text-blue-700 font-medium">
+                Open →
+            </a>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-gray-500">No subdomains yet. Create your first subdomain!</p>
+    {% endfor %}
+</div>
+<hr class="my-10">
 <!-- Items Grid -->
+<h2 class="text-2xl font-semibold mb-4">Words</h2>
 <div class="grid md:grid-cols-4 gap-6">
     {% for item in items %}
     <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">

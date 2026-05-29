@@ -22,10 +22,12 @@ def domain_detail(request, domain_id):
     """Show one domain and its items"""
     domain = get_object_or_404(Domain, id=domain_id)
     items = domain.items.prefetch_related('translations').all()
+    subdomains = domain.subdomains.all()
     
     return render(request, "domains/domain_detail.html", {
         'domain': domain,
-        'items': items
+        'items': items,
+        'subdomains': subdomains
     })
 
 
