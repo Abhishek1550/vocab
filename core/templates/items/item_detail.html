@@ -16,10 +16,10 @@
         </div>
         
         <div class="flex gap-3">
-            <a href="{% url 'translation_create' item.id %}" 
+            <!-- <a href="{% url 'translation_create' item.id %}" 
                 class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
                 <i class="fas fa-plus"></i> Add Another Translation
-            </a>
+            </a> -->
             <a href="{% url 'item_delete' item.id %}" 
                class="px-6 py-3 text-red-600 hover:bg-red-50 rounded-xl font-medium">
                 Delete
@@ -51,7 +51,7 @@
             
             {% for translation in translations %}
             <div class="bg-white p-6 rounded-2xl shadow-sm mb-6 border border-gray-100">
-                <div class="flex justify-between items-start">
+                <!-- <div class="flex justify-between items-start">
                     <div>
                         <span class="text-3xl font-bold">{{ translation.word }}</span>
                         <span class="ml-3 bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm font-medium">
@@ -59,11 +59,51 @@
                         </span>
                     </div>
                     
+                    <div class="flex gap-3">
                     {% if translation.is_primary %}
                         <span class="bg-green-100 text-green-700 text-xs px-4 py-2 rounded-full font-medium">
                             Primary
                         </span>
                     {% endif %}
+                    </div>
+                    
+                    <div class="flex gap-3">
+                        <a href="{% url 'translation_update' translation.id %}" 
+                           class="text-blue-600 hover:text-blue-700 font-medium">
+                            Edit
+                        </a>
+                        <a href="{% url 'translation_delete' translation.id %}" 
+                           class="text-red-600 hover:text-red-700 font-medium">
+                            Delete
+                        </a>
+                    </div>
+                </div> -->
+                
+                <div class="flex flex-wrap justify-between items-start gap-4">
+                    <div class="min-w-0">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="text-3xl font-bold">{{ translation.word }}</span>
+                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm font-medium">
+                                {{ translation.language_code|upper }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3 ml-auto">
+                        {% if translation.is_primary %}
+                            <span class="bg-green-100 text-green-700 text-xs px-4 py-2 rounded-full font-medium">
+                                Primary
+                            </span>
+                        {% endif %}
+                        <a href="{% url 'translation_update' translation.id %}"
+                        class="text-blue-600 hover:text-blue-700 font-medium">
+                            Edit
+                        </a>
+                        <a href="{% url 'translation_delete' translation.id %}"
+                           class="text-red-600 hover:text-red-700 font-medium">
+                            Delete
+                        </a>
+                    </div>
                 </div>
 
                 {% if translation.description %}
@@ -86,7 +126,7 @@
 
             <!-- Quick Action -->
             <div class="mt-8">
-                <a href="{% url 'item_update' item.id %}" 
+                <a href="{% url 'translation_create' item.id %}" 
                    class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
                     <i class="fas fa-plus"></i> Add Another Translation
                 </a>

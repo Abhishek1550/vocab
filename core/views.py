@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Domain, Item
+from .models import Domain, Item, Translation
 from .forms import DomainForm, ItemForm, TranslationForm
 from django.contrib.auth.decorators import login_required
 
@@ -13,7 +13,7 @@ def vocab(request):
 @login_required
 def domain_list(request):
     """List all domains"""
-    domains = Domain.objects.filter(user=request.user).order_by('name')
+    domains = Domain.objects.filter(user=request.user, parent=None).order_by('name')
     return render(request, "domains/domain_list.html", {
         'domains': domains
     })
@@ -50,6 +50,31 @@ def domain_create(request):
     })
 
 @login_required
+def domain_create_subdomain(request, parent_domain_id=None):
+    """Create new domain or subdomain"""
+    parent_domain = None
+    if parent_domain_id:
+        parent_domain = get_object_or_404(Domain, id=parent_domain_id, user=request.user)
+    
+    if request.method == 'POST':
+        form = DomainForm(request.POST)
+        if form.is_valid():
+            domain = form.save(commit=False)
+            domain.user = request.user
+            if parent_domain:
+                domain.parent = parent_domain
+            domain.save()
+            messages.success(request, "Domain created successfully!")
+            return redirect('domain_list')
+    else:
+        form = DomainForm()
+    
+    return render(request, "domains/domain_form.html", {
+        'form': form,
+        'parent_domain': parent_domain
+    })
+
+@login_required
 def domain_update(request, domain_id):
     """Edit existing domain"""
     domain = get_object_or_404(Domain, id=domain_id, user=request.user)
@@ -81,11 +106,13 @@ def item_create(request, domain_id):
             # Save Item first
             item = item_form.save(commit=False)
             item.domain = domain
+            item.user = request.user
             item.save()
             
             # Save Translation
             translation = translation_form.save(commit=False)
             translation.item = item
+            translation.user = request.user
             translation.save()
             
             messages.success(request, "Word and translation added successfully!")
@@ -162,6 +189,7 @@ def translation_create(request, item_id):
         if form.is_valid():
             translation = form.save(commit=False)
             translation.item = item
+            translation.user = request.user
             translation.save()
             messages.success(request, "New translation added successfully!")
             return redirect('item_detail', item_id=item.id)
@@ -170,5 +198,41 @@ def translation_create(request, item_id):
     
     return render(request, "items/translation_form.html", {
         'form': form,
+        'item': item
+    })
+
+@login_required
+def translation_update(request, translation_id):
+    translation = get_object_or_404(Translation, id=translation_id, user=request.user)
+    item = translation.item
+    
+    if request.method == 'POST':
+        form = TranslationForm(request.POST, instance=translation)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Translation updated successfully!")
+            return redirect('item_detail', item_id=item.id)
+    else:
+        form = TranslationForm(instance=translation)
+    
+    return render(request, "items/translation_form.html", {
+        'form': form,
+        'item': item,
+        'translation': translation,
+        'is_edit': True
+    })
+
+@login_required
+def translation_delete(request, translation_id):
+    translation = get_object_or_404(Translation, id=translation_id, user=request.user)
+    item = translation.item
+    
+    if request.method == 'POST':
+        translation.delete()
+        messages.success(request, "Translation deleted successfully!")
+        return redirect('item_detail', item_id=item.id)
+    
+    return render(request, "items/translation_confirm_delete.html", {
+        'translation': translation,
         'item': item
     })

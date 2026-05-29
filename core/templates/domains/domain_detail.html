@@ -12,10 +12,6 @@
     </div>
     <div class="flex gap-4">
         <a href="{% url 'domain_update' domain.id %}" class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">Edit</a>
-        <a href="{% url 'item_create' domain.id %}" 
-           class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">
-            + Add New Word
-        </a>
     </div>
 </div>
 
@@ -43,15 +39,23 @@
         </div>
     </div>
     {% empty %}
-    <p class="text-gray-500">No subdomains yet. Create your first subdomain!</p>
+    <div class="col-span-3 text-center py-10">
+        <p class="text-gray-500">No subdomains yet. Create your first subdomain!</p>
+        <br>
+        <a href="{% url 'domain_create_subdomain' domain.id %}" 
+           class="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">
+            Create Subdomain
+        </a>
+    </div>
+
     {% endfor %}
 </div>
 <hr class="my-10">
 <!-- Items Grid -->
 <h2 class="text-2xl font-semibold mb-4">Words</h2>
-<div class="grid md:grid-cols-4 gap-6">
+<div class="grid md:grid-cols-3 gap-6">
     {% for item in items %}
-    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition">
+    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition flex flex-col h-full">
         {% if item.image %}
             <img src="{{ item.image.url }}" 
                  class="w-full h-48 object-cover"
@@ -71,9 +75,14 @@
         </div>
     </div>
     {% empty %}
-    <p class="col-span-4 text-gray-500 py-10 text-center">
-        No words added yet. Add your first word!
-    </p>
+    <div class="col-span-3 text-center py-10">
+        <p class="text-gray-500">No words added yet. Add your first word!</p>
+        <br>
+        <a href="{% url 'item_create' domain.id %}" 
+           class="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">
+            Add New Word
+        </a>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}
