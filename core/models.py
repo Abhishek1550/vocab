@@ -27,6 +27,8 @@ class Domain(models.Model):
         null=True,
         help_text="Photo of the domain"
     )
+    ai_generated = models.BooleanField(default=False)
+    generation_prompt = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ['name']

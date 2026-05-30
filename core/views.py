@@ -41,6 +41,17 @@ def domain_create(request):
         if form.is_valid():
             domain = form.save(commit=False)
             domain.user = request.user
+            prompt = form.cleaned_data.get('generation_prompt')
+            if prompt:
+                try:
+                    image_file = generate_image_from_prompt(prompt)
+                    domain.image.save(f"ai_generated_{domain.name}.png", image_file, save=False)
+                    domain.ai_generated = True
+                    domain.generation_prompt = prompt
+                except Exception as e:
+                    messages.error(request, f"Image generation failed: {str(e)}")
+                    return redirect('domain_detail', domain_id=domain.id)
+                
             domain.save()
             messages.success(request, "Domain created successfully!")
             return redirect('domain_list')
@@ -65,6 +76,17 @@ def domain_create_subdomain(request, parent_domain_id=None):
             domain.user = request.user
             if parent_domain:
                 domain.parent = parent_domain
+            prompt = form.cleaned_data.get('generation_prompt')
+            if prompt:
+                try:
+                    image_file = generate_image_from_prompt(prompt)
+                    domain.image.save(f"ai_generated_{domain.name}.png", image_file, save=False)
+                    domain.ai_generated = True
+                    domain.generation_prompt = prompt
+                except Exception as e:
+                    messages.error(request, f"Image generation failed: {str(e)}")
+                    return redirect('domain_detail', domain_id=domain.id)
+                
             domain.save()
             messages.success(request, "Domain created successfully!")
             return redirect('domain_list')

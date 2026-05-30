@@ -5,7 +5,7 @@ from allauth.account.forms import LoginForm, SignupForm
 class DomainForm(forms.ModelForm):
     class Meta:
         model = Domain
-        fields = ['name', 'description','image']
+        fields = ['name', 'description','image', 'generation_prompt']
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500',
@@ -17,6 +17,11 @@ class DomainForm(forms.ModelForm):
             }),
             'image': forms.ClearableFileInput(attrs={
                 'class': 'block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100'
+            }),
+            'generation_prompt': forms.Textarea(attrs={
+                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl',
+                'rows': 3,
+                'placeholder': 'Describe the image you want to generate (e.g., "A red apple on a wooden table")'
             })
         }
 
