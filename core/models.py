@@ -21,6 +21,12 @@ class Domain(models.Model):
         on_delete=models.CASCADE,
         related_name='domains'
     )
+    image = models.ImageField(
+        upload_to='domains/', 
+        blank=True, 
+        null=True,
+        help_text="Photo of the domain"
+    )
 
     class Meta:
         ordering = ['name']

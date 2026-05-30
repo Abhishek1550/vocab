@@ -8,13 +8,24 @@
         {% if form.instance.pk %}Edit Domain{% else %}Create New Domain{% endif %}
     </h1>
 
-    <form method="post" class="bg-white p-8 rounded-2xl shadow-sm">
+    <form method="post" enctype="multipart/form-data" class="bg-white p-8 rounded-2xl shadow-sm">
         {% csrf_token %}
         {% if form.errors %}
         <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
             {{ form.errors }}
         </div>
         {% endif %}
+
+        <!-- Image -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Image (Optional)</label>
+                {{ form.image }}
+                {% if form.image %}
+                    <div class="mt-3">
+                        <img src="{{ form.image.url }}" class="max-h-48 rounded-lg" alt="Current Image">
+                    </div>
+                {% endif %}
+            </div>
         
         <div class="space-y-6">
             <div>

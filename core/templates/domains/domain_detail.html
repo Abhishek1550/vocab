@@ -14,13 +14,33 @@
         <a href="{% url 'domain_update' domain.id %}" class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">Edit</a>
     </div>
 </div>
-
+<hr class="my-10">
 <!-- Subdomains Section -->
-<h2 class="text-2xl font-semibold mb-4">Subdomains</h2>
+<div class="flex justify-between items-center mb-8">
+    <div>
+        <h2 class="text-2xl font-semibold mb-4">Subdomains</h2>
+    </div>
+    <div class="flex gap-4">
+        <a href="{% url 'domain_create_subdomain' domain.id %}" 
+           class="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">
+            Add Subdomain
+        </a>
+    </div>
+</div>
 <div class="grid md:grid-cols-3 gap-6">
     {% for subdomain in subdomains %}
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition flex flex-col h-full">
         <h3 class="text-xl font-semibold">{{ subdomain.name }}</h3>
+
+        {% if subdomain.image %}
+            <img src="{{ subdomain.image.url }}" 
+                 class="w-full h-48 object-cover"
+                 alt="{{ subdomain.name }}">
+        {% else %}
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                <i class="fas fa-image text-4xl text-gray-400"></i>
+            </div>
+        {% endif %}
         
         {% if subdomain.description %}
             <p class="text-gray-600 mt-2 line-clamp-2 flex-grow">{{ subdomain.description }}</p>
@@ -40,19 +60,24 @@
     </div>
     {% empty %}
     <div class="col-span-3 text-center py-10">
-        <p class="text-gray-500">No subdomains yet. Create your first subdomain!</p>
-        <br>
-        <a href="{% url 'domain_create_subdomain' domain.id %}" 
-           class="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">
-            Create Subdomain
-        </a>
+        <p class="text-gray-500">No subdomains yet.</p>
     </div>
 
     {% endfor %}
 </div>
 <hr class="my-10">
 <!-- Items Grid -->
-<h2 class="text-2xl font-semibold mb-4">Words</h2>
+<div class="flex justify-between items-center mb-8">
+    <div>
+        <h2 class="text-2xl font-semibold mb-4">Words</h2>
+    </div>
+    <div class="flex gap-4">
+        <a href="{% url 'item_create' domain.id %}" 
+           class="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">
+            Add Word
+        </a>
+    </div>
+</div>
 <div class="grid md:grid-cols-3 gap-6">
     {% for item in items %}
     <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition flex flex-col h-full">
@@ -76,12 +101,7 @@
     </div>
     {% empty %}
     <div class="col-span-3 text-center py-10">
-        <p class="text-gray-500">No words added yet. Add your first word!</p>
-        <br>
-        <a href="{% url 'item_create' domain.id %}" 
-           class="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700">
-            Add New Word
-        </a>
+        <p class="text-gray-500">No words added yet.</p>
     </div>
     {% endfor %}
 </div>

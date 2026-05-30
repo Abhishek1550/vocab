@@ -35,7 +35,7 @@ def domain_detail(request, domain_id):
 def domain_create(request):
     """Create new domain"""
     if request.method == 'POST':
-        form = DomainForm(request.POST)
+        form = DomainForm(request.POST, request.FILES)
         if form.is_valid():
             domain = form.save(commit=False)
             domain.user = request.user
@@ -57,7 +57,7 @@ def domain_create_subdomain(request, parent_domain_id=None):
         parent_domain = get_object_or_404(Domain, id=parent_domain_id, user=request.user)
     
     if request.method == 'POST':
-        form = DomainForm(request.POST)
+        form = DomainForm(request.POST, request.FILES)
         if form.is_valid():
             domain = form.save(commit=False)
             domain.user = request.user
@@ -80,7 +80,7 @@ def domain_update(request, domain_id):
     domain = get_object_or_404(Domain, id=domain_id, user=request.user)
     
     if request.method == 'POST':
-        form = DomainForm(request.POST, instance=domain)
+        form = DomainForm(request.POST, request.FILES ,instance=domain)
         if form.is_valid():
             form.save()
             messages.success(request, "Domain updated successfully!")
