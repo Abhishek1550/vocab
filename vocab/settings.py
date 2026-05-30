@@ -170,3 +170,6 @@ ACCOUNT_FORMS = {
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+HUGGINGFACE_API_KEY = os.getenv('HUGGINGFACE_API_KEY')

@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+
+from core.utils.generate_image import generate_image_from_prompt
 from .models import Domain, Item, Translation
 from .forms import DomainForm, ItemForm, TranslationForm
 from django.contrib.auth.decorators import login_required
@@ -107,6 +109,18 @@ def item_create(request, domain_id):
             item = item_form.save(commit=False)
             item.domain = domain
             item.user = request.user
+
+            prompt = item_form.cleaned_data.get('generation_prompt')
+            if prompt:
+                try:
+                    image_file = generate_image_from_prompt(prompt)
+                    item.image.save(f"ai_generated_{item.id}.png", image_file, save=False)
+                    item.ai_generated = True
+                    item.generation_prompt = prompt
+                except Exception as e:
+                    messages.error(request, f"Image generation failed: {str(e)}")
+                    return redirect('domain_detail', domain_id=domain.id)
+                
             item.save()
             
             # Save Translation

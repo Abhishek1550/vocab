@@ -17,18 +17,47 @@
         
         <div class="grid grid-cols-1 gap-10">
 
-            <!-- Image -->
+            <!-- Image Section with Toggle -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Image (Optional)</label>
-                {{ item_form.image }}
-                {% if item.image %}
-                    <div class="mt-3">
-                        <img src="{{ item.image.url }}" class="max-h-48 rounded-lg" alt="Current Image">
-                    </div>
-                {% endif %}
+                <label class="block text-sm font-medium text-gray-700 mb-4">Image</label>
+                
+                <!-- Toggle Buttons -->
+                <div class="flex border border-gray-200 rounded-xl p-1 w-fit mb-6">
+                    <button type="button" onclick="showUpload()" 
+                            id="upload-tab"
+                            class="tab-button px-6 py-2 rounded-lg font-medium active">
+                        Upload Image
+                    </button>
+                    <button type="button" onclick="showGenerate()" 
+                            id="generate-tab"
+                            class="tab-button px-6 py-2 rounded-lg font-medium">
+                        Generate with AI
+                    </button>
+                </div>
+
+                <!-- Upload Option -->
+                <div id="upload-section">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Choose Image (Optional)</label>
+                    {{ item_form.image }}
+                    {% if item and item.image %}
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-500 mb-2">Current Image:</p>
+                            <img src="{{ item.image.url }}" class="max-h-48 rounded-lg" alt="Current Image">
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- AI Generate Option -->
+                <div id="generate-section" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Describe the Image</label>
+                    {{ item_form.generation_prompt }}
+                    <p class="text-xs text-gray-500 mt-2">
+                        Example: "A red apple on a wooden table" or "Modern stainless steel spoon"
+                    </p>
+                </div>
             </div>
 
-            <!-- Translation -->
+            <!-- Translation Section -->
             <div class="border-t pt-8">
                 <h2 class="text-xl font-semibold mb-6">Translation Details</h2>
                 
@@ -68,4 +97,33 @@
         </button>
     </form>
 </div>
+
+<script>
+function showUpload() {
+    document.getElementById('upload-section').classList.remove('hidden');
+    document.getElementById('generate-section').classList.add('hidden');
+    document.getElementById('upload-tab').classList.add('active', 'bg-blue-100');
+    document.getElementById('generate-tab').classList.remove('active', 'bg-blue-100');
+}
+
+function showGenerate() {
+    document.getElementById('upload-section').classList.add('hidden');
+    document.getElementById('generate-section').classList.remove('hidden');
+    document.getElementById('generate-tab').classList.add('active', 'bg-blue-100');
+    document.getElementById('upload-tab').classList.remove('active', 'bg-blue-100');
+}
+
+// Default to Upload
+showUpload();
+</script>
+
+<style>
+.tab-button {
+    transition: all 0.2s;
+}
+.tab-button.active {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+</style>
 {% endblock %}

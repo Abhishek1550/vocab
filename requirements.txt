@@ -3,3 +3,5 @@ psycopg2-binary
 Pillow
 drf-spectacular
 django-allauth
+openai
+huggingface-hub

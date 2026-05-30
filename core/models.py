@@ -58,6 +58,8 @@ class Item(models.Model):
         on_delete=models.CASCADE,
         related_name='items'
     )
+    ai_generated = models.BooleanField(default=False)
+    generation_prompt = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ['domain', 'created_at']
