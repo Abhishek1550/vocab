@@ -54,9 +54,6 @@ class GeminiProvider(LLMProvider):
             config=config,
         )
 
-        print("\n=== GEMINI RESPONSE ===")
-        print(response)
-
         candidate = response.candidates[0]
 
         for part in candidate.content.parts:
