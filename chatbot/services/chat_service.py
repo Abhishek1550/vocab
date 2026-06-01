@@ -71,6 +71,8 @@ class ChatService:
                 arguments=response.tool_call.arguments,
             )
 
+            print("===========TOOL RESULT===========")
+            print(f"Tool '{response.tool_call.name}' returned: {tool_result}")
             #
             # SECOND GEMINI CALL
             #
