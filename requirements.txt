@@ -5,3 +5,4 @@ drf-spectacular
 django-allauth
 openai
 huggingface-hub
+google-genai

@@ -31,7 +31,10 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     
     # API views
-    path("api/v1/", include("core.api.urls")),
+    path("api/", include("core.api.urls")),
+
+    # Chat API views
+    path("api/chat/", include("chatbot.api.urls")),
     
     # API schema and documentation
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

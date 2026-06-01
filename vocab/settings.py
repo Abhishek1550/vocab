@@ -42,6 +42,7 @@ DJANGO_APPS = [
 
 APPS = [
     'core',
+    'chatbot',
 ]
 
 THIRD_PARTY_APPS = [
@@ -172,4 +173,7 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
 HUGGINGFACE_API_KEY = os.getenv('HUGGINGFACE_API_KEY')
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
