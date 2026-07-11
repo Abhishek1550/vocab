@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4o#4f7)^x=yo7%05gm9aqw4+1xy0sh=+&svei8spx6g@$9g4q)'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,6 +41,7 @@ DJANGO_APPS = [
 ]
 
 APPS = [
+    'users',
     'core',
     'chatbot',
 ]
@@ -92,11 +93,11 @@ WSGI_APPLICATION = 'vocab.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'vocab_db'),
-        'USER': os.getenv('POSTGRES_USER', 'abhishek'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'abhishek123'),
-        'HOST': os.getenv('DB_HOST', 'db'),        # 'db' in docker, 'localhost' locally
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),        # 'db' in docker, 'localhost' locally
+        'PORT': os.getenv('DB_PORT'),
         'CONN_MAX_AGE': 600,                       # Good practice
     }
 }
